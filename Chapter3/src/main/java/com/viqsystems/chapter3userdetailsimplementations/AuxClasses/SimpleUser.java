@@ -4,6 +4,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.List;
 
 //More Practical Implementation
 public class SimpleUser implements UserDetails {
@@ -18,9 +19,11 @@ public class SimpleUser implements UserDetails {
  * */
     private final String username;
     private final String password;
-    public SimpleUser(String username, String password) {
+    private final String authority;
+    public SimpleUser(String username, String password, String authority) {
         this.username = username;
         this.password = password;
+        this.authority = authority;
     }
     @Override
     public String getUsername() {
@@ -29,7 +32,7 @@ public class SimpleUser implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        return List.of(() -> authority);
     }
 
     @Override
@@ -39,21 +42,21 @@ public class SimpleUser implements UserDetails {
 
     @Override
     public boolean isAccountNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isEnabled() {
-        return false;
+        return true;
     }
 }
